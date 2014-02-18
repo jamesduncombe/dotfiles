@@ -41,16 +41,13 @@ Bundle 'gmarik/vundle'
 
 " Bundles
 Bundle 'kien/ctrlp.vim'
-"Bundle 'scrooloose/nerdtree'
 Bundle 'christoomey/vim-tmux-navigator'
-"Bundle 'rking/ag.vim'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'slim-template/vim-slim'
 Bundle 'jnwhiteh/vim-golang'
 Bundle 'scrooloose/syntastic'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-endwise'
-"Bundle 'tpope/vim-rvm'
 Bundle 'skalnik/vim-vroom'
 Bundle 'ervandew/supertab'
 Bundle 'vim-scripts/ctags.vim'
@@ -123,14 +120,6 @@ if executable('ag')
 endif
 
 let g:agprg = 'ag --nogroup --nocolor --column'
-
-" Folding code
-" set foldmethod=syntax
-" set foldlevelstart=99
-
-" let javaScript_fold=1  " JavaScript
-"let php_folding=1      " PHP
-" let ruby_fold=1        " Ruby
 
 " Mappings
 
