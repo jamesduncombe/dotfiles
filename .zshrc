@@ -5,25 +5,39 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="simple"
+ZSH_THEME="jd"
 
-alias mocha='nocorrect mocha ' 
-
-alias mcc='mocha --compilers coffee:coffee-script'
-
+# Sys utils
 alias m='more'
 alias c='clear'
 alias l='ls'
 alias s='grep -R'
 alias t='tail'
+alias o='open'
+alias h='history | grep '
+
 alias sb='subl'
 
+# Photoshop
+alias psh='open -a "Adobe Photoshop CC"'
+
 # Tmux
+alias tm='tmux'
 alias tls='tmux list-sessions'
 alias ta='tmux attach-session -t'
 
+# Vagrant
+alias va='vagrant'
+alias vssh='vagrant ssh'
+alias vup='vagrant up'
+alias vht='vagrant halt'
+
 # RSpec
 alias rsp='rspec'
+
+# Mocha
+alias mocha='nocorrect mocha'
+alias mcc='mocha --compilers coffee:coffee-script'
 
 # Forman start
 fs() {
@@ -34,12 +48,39 @@ fs() {
   fi
 }
 
+# Start rails - if there's a Procfile use it, else use rails s
+startrails() {
+  if [[ (-f Procfile.dev || -f Procfile) ]]; then
+    fs
+  else
+    rails s
+  fi
+}
+
 # In / out of directory
 ino() {
   cd ..
   cd -
 }
 
+# Rails muxing
+
+rmux() {
+  SESH=$(basename `pwd`)
+
+  tmux new-session -d -s $SESH
+  tmux send-keys 'vi -c +Ex' 'C-m'
+  tmux selectp -t 0
+
+  tmux splitw -h -p 50
+  tmux send-keys 'startrails' 'C-m'
+  tmux selectp -t 1
+
+  tmux splitw -v -p 50
+  tmux send-keys 'tail -f ./log/development.log' 'C-m'
+  tmux selectp -t 0
+  tmux -2 attach-session -t $SESH
+}
 
 # Shortcuts to directories
 alias sts="cd ~/Sites"
@@ -48,7 +89,7 @@ alias sts="cd ~/Sites"
 alias sshc="vi ~/.ssh/config"
 
 # Heroku
-alias h='heroku'
+alias hr='heroku'
 
 # RVM
 alias rgl='rvm gemset list'
@@ -61,10 +102,19 @@ alias bi='bundle install'
 alias grm='git rm'
 alias gll='git lg'
 alias gsh='git stash'
+alias gsl='git stash list'
 alias gch='nocorrect git checkout'
 
 alias gdno='git diff --name-only'
 alias gdss='git diff --shortstat'
+
+# Brew
+alias bru='brew update'
+alias bri='brew install'
+alias brs='brew search'
+
+# Go
+alias go64linux='GOARCH=amd64 GOOS=linux go build'
 
 # Gems
 alias gml='gem list'
@@ -128,18 +178,23 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-export PATH=/Users/james/.rvm/gems/ruby-1.9.3-p125/bin
 
-export PATH=$PATH:/Applications/Postgres93.app/Contents/MacOS/bin:/usr/local/bin:/bin:/usr/sbin:/sbin:/usr/bin:/usr/local/sbin:/usr/X11/bin:$HOME/Dropbox/bin:/usr/local/go/bin
+export PATH=$PATH:/Applications/Postgres93.app/Contents/MacOS/bin:/bin:/usr/sbin:/sbin:/usr/bin:/usr/local/sbin:/usr/X11/bin:$HOME/Dropbox/bin:/usr/local/go/bin
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+export PATH=/usr/local/bin:$PATH
 
 ### Added by the Heroku Toolbelt
 export PATH=$PATH:/usr/local/heroku/bin
 
+# Adding NPM modules
+export PATH=$PATH:/usr/local/lib/node_modules
+
 # Adding GOPATH
 export GOPATH=$HOME/Dropbox/go
-export PATH=$PATH:$GOPATH/bin
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOBIN
 
 # added by travis gem
 [ -f /Users/james/.travis/travis.sh ] && source /Users/james/.travis/travis.sh

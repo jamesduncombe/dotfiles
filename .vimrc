@@ -1,5 +1,8 @@
 " Base config
 
+" for MacVim when I feel like it
+set guifont=Droid\ Sans\ Mono:h14
+
 set shell=/bin/sh
 set ruler          " show the cursor position all the time
 set showcmd        " display incomplete commands
@@ -52,6 +55,11 @@ Bundle 'skalnik/vim-vroom'
 Bundle 'ervandew/supertab'
 Bundle 'vim-scripts/ctags.vim'
 Bundle 'vim-scripts/tComment'
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "garbas/vim-snipmate"
+Bundle "honza/vim-snippets"
+Bundle "tpope/vim-surround"
 
 syntax enable
 filetype plugin indent on     " required!
@@ -102,7 +110,7 @@ function! <SID>StripTrailingWhitespaces()
 endfunction
 
 " And call the above on every save
-autocmd BufWritePre *.rb,*.slim,*.coffee,*.sass,*.scss,*.css,*.html,*.js :call <SID>StripTrailingWhitespaces()
+autocmd BufWritePre *.php,*.rb,*.slim,*.coffee,*.sass,*.scss,*.css,*.haml,*.html,*.js :call <SID>StripTrailingWhitespaces()
 
 " Ag setup
 
@@ -119,7 +127,13 @@ if executable('ag')
 
 endif
 
-let g:agprg = 'ag --nogroup --nocolor --column'
+" let g:agprg = 'ag --nogroup --nocolor --column'
+" bind \ (backward slash) to grep shortcut
+command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+nnoremap \ :Ag<SPACE>
+
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " Mappings
 
@@ -133,7 +147,7 @@ map <leader>ct :!/usr/local/bin/ctags -R .<cr>
 
 " file finders
 nmap <leader>t :CtrlP<cr>
-nmap <leader>e :Ex<cr>
+nmap <leader>e :Explore<cr>
 
 " Use ctrl-[hjkl] to select the active split!
 nnoremap <C-J> <C-W><C-J>
@@ -153,3 +167,5 @@ nmap <leader>p :set paste<cr>
 " Sort out copying visual block
 vmap <C-c> "*yy
 
+" Convert tab to 2 spaces
+nmap <leader>cts :%s/\t/  /g<cr>
