@@ -16,6 +16,8 @@ alias t='tail'
 alias o='open'
 alias h='history | grep '
 
+alias v='/Applications/MacVim.app/Contents/MacOS/Vim'
+
 alias sb='subl'
 
 # Photoshop

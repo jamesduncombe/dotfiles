@@ -1,0 +1,7 @@
+alias dc = "sudo docker"
+alias dr = "dc run"
+alias ds = "dc stop"
+alias di = "dc images"
+alias drmi = "dc rmi"
+alias drm = "dc rm"
+alias dip = "dc inspect -f '{{ .NetworkSettings.IPAddress }}'"
