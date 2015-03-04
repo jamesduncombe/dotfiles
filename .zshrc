@@ -20,6 +20,9 @@ alias v='/Applications/MacVim.app/Contents/MacOS/Vim'
 
 alias sb='subl'
 
+# Networking
+alias p='ping'
+
 # Photoshop
 alias psh='open -a "Adobe Photoshop CC"'
 
@@ -99,6 +102,7 @@ alias rl='rvm list'
 
 # Bundler
 alias bi='bundle install'
+alias bx='bundle exec'
 
 # Git
 alias grm='git rm'
@@ -179,19 +183,17 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
 export PATH=$PATH:/Applications/Postgres93.app/Contents/MacOS/bin:/bin:/usr/sbin:/sbin:/usr/bin:/usr/local/sbin:/usr/X11/bin:$HOME/Dropbox/bin:/usr/local/go/bin
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-
-export PATH=/usr/local/bin:$PATH
+export PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
 
 ### Added by the Heroku Toolbelt
 export PATH=$PATH:/usr/local/heroku/bin
 
 # Adding NPM modules
 export PATH=$PATH:/usr/local/lib/node_modules
+
+export PATH=/usr/local/bin:$PATH
 
 # Adding GOPATH
 export GOPATH=$HOME/Dropbox/go
@@ -200,3 +202,6 @@ export PATH=$PATH:$GOBIN
 
 # added by travis gem
 [ -f /Users/james/.travis/travis.sh ] && source /Users/james/.travis/travis.sh
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+

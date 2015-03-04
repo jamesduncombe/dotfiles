@@ -1,7 +1,7 @@
 " Base config
 
 " for MacVim when I feel like it
-set guifont=Droid\ Sans\ Mono:h14
+set guifont=Source\ Code\ Pro:h14
 
 set shell=/bin/sh
 set ruler          " show the cursor position all the time
@@ -47,22 +47,26 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'christoomey/vim-tmux-navigator'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'slim-template/vim-slim'
-Bundle 'jnwhiteh/vim-golang'
+Bundle 'fatih/vim-go'
 Bundle 'scrooloose/syntastic'
-Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-endwise'
 Bundle 'skalnik/vim-vroom'
 Bundle 'ervandew/supertab'
 Bundle 'vim-scripts/ctags.vim'
 Bundle 'vim-scripts/tComment'
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "garbas/vim-snipmate"
-Bundle "honza/vim-snippets"
-Bundle "tpope/vim-surround"
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'tomtom/tlib_vim'
+Bundle 'garbas/vim-snipmate'
+Bundle 'honza/vim-snippets'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-haml'
+Bundle 'bling/vim-airline'
 
 syntax enable
 filetype plugin indent on     " required!
+
+" Use Molokai theme
+color molokai
 
 " Now we're in the fun zone...
 
@@ -70,7 +74,7 @@ augroup vimrcEx
   autocmd!
 
   " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
+  autocmd FileType text setlocal tw=78
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it for commit messages, when the position is invalid, or when
@@ -81,20 +85,25 @@ augroup vimrcEx
     \ endif
 
   " Set syntax highlighting for specific file types
-  autocmd BufRead,BufNewFile *.md set filetype=markdown
+  autocmd BufRead,BufNewFile *.md set ft=markdown
 
   " See: https://github.com/slim-template/vim-slim/issues/38
-  autocmd BufNewFile,BufRead *.slim set syntax=slim|set ft=slim
+  autocmd BufNewFile,BufRead *.slim set syntax=slim ft=slim
 
   " Enable spellchecking for Markdown
   autocmd FileType markdown setlocal spell
 
-  " Automatically wrap at 80 characters for Markdown
-  autocmd BufRead,BufNewFile *.md setlocal textwidth=80
+  " Automatically wrap at 78 characters for Markdown
+  autocmd BufRead,BufNewFile,BufReadPost *.md setlocal tw=78
+
+  " ES6
+  autocmd BufRead,BufNewFile *.es6 setfiletype javascript
+
+  " Golang
+  " autocmd BufReadPost *.go set ts=4 sw=4 list!
+  autocmd FileType go set ts=4 sw=4 list!
+
 augroup END
-
-
-color molokai
 
 " Remove trailing white space
 function! <SID>StripTrailingWhitespaces()
@@ -127,13 +136,11 @@ if executable('ag')
 
 endif
 
-" let g:agprg = 'ag --nogroup --nocolor --column'
-" bind \ (backward slash) to grep shortcut
-command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-nnoremap \ :Ag<SPACE>
-
-" bind K to grep word under cursor
-nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+" Go
+let g:go_fmt_command = "goimports"
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
 
 " Mappings
 
@@ -149,23 +156,32 @@ map <leader>ct :!/usr/local/bin/ctags -R .<cr>
 nmap <leader>t :CtrlP<cr>
 nmap <leader>e :Explore<cr>
 
+" Mac OSX open command
+nmap <leader>oo :!open ./<cr><cr>
+
 " Use ctrl-[hjkl] to select the active split!
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" Remap r to Ctrl + R (redo)
-nmap r <c-r>
+" let g:agprg = 'ag --nogroup --nocolor --column'
+" bind \ (backward slash) to grep shortcut
+command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+nnoremap \ :Ag<SPACE>
+
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " configure syntastic syntax checking to check on open as well as save
-let g:syntastic_check_on_open=1
+"let g:syntastic_check_on_open=0
 
 " Sort out pasting
 nmap <leader>p :set paste<cr>
 
-" Sort out copying visual block
+" Ctrl + C for copying
 vmap <C-c> "*yy
 
 " Convert tab to 2 spaces
 nmap <leader>cts :%s/\t/  /g<cr>
+
