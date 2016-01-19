@@ -1,7 +1,7 @@
 " Base config
 
 " for MacVim when I feel like it
-set guifont=Source\ Code\ Pro:h14
+set guifont=Hack:h13
 
 set shell=/bin/sh
 set ruler          " show the cursor position all the time
@@ -39,28 +39,28 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " let Vundle manage Vundle
-" required!
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
 
-" Bundles
-Bundle 'kien/ctrlp.vim'
-Bundle 'christoomey/vim-tmux-navigator'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'slim-template/vim-slim'
-Bundle 'fatih/vim-go'
-Bundle 'scrooloose/syntastic'
-Bundle 'tpope/vim-endwise'
-Bundle 'skalnik/vim-vroom'
-Bundle 'ervandew/supertab'
-Bundle 'vim-scripts/ctags.vim'
-Bundle 'vim-scripts/tComment'
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tomtom/tlib_vim'
-Bundle 'garbas/vim-snipmate'
-Bundle 'honza/vim-snippets'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-haml'
-Bundle 'bling/vim-airline'
+" Plugins
+Plugin 'kien/ctrlp.vim'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'slim-template/vim-slim'
+Plugin 'fatih/vim-go'
+Plugin 'scrooloose/syntastic'
+Plugin 'tpope/vim-endwise'
+Plugin 'skalnik/vim-vroom'
+Plugin 'ervandew/supertab'
+Plugin 'vim-scripts/ctags.vim'
+Plugin 'vim-scripts/tComment'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-haml'
+Plugin 'bling/vim-airline'
+Plugin 'elixir-lang/vim-elixir'
 
 syntax enable
 filetype plugin indent on     " required!
@@ -100,8 +100,7 @@ augroup vimrcEx
   autocmd BufRead,BufNewFile *.es6 setfiletype javascript
 
   " Golang
-  " autocmd BufReadPost *.go set ts=4 sw=4 list!
-  autocmd FileType go set ts=4 sw=4 list!
+  autocmd BufRead,BufNewFile *.go set ts=4 sw=4 nolist
 
 augroup END
 
@@ -159,6 +158,8 @@ nmap <leader>e :Explore<cr>
 " Mac OSX open command
 nmap <leader>oo :!open ./<cr><cr>
 
+nmap <leader>w :!osascript -e "tell application \"Google Chrome\" to tell the active tab of its first window" -e "reload" -e "end tell"<cr><cr>
+
 " Use ctrl-[hjkl] to select the active split!
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -177,7 +178,7 @@ nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 "let g:syntastic_check_on_open=0
 
 " Sort out pasting
-nmap <leader>p :set paste<cr>
+set pastetoggle=<leader>p
 
 " Ctrl + C for copying
 vmap <C-c> "*yy
@@ -185,3 +186,14 @@ vmap <C-c> "*yy
 " Convert tab to 2 spaces
 nmap <leader>cts :%s/\t/  /g<cr>
 
+" The below commands from UnixPhilosopher
+" See: http://blog.unixphilosopher.com/2015/02/five-weird-vim-tricks.html
+
+" Enter command more with one keystroke
+nnoremap ; :
+
+" Start an external command with a single bang
+nnoremap ! :!
+
+" Fixing a common typo
+cabbrev qw :wq

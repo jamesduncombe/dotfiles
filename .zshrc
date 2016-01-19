@@ -11,14 +11,17 @@ ZSH_THEME="jd"
 alias m='more'
 alias c='clear'
 alias l='ls'
-alias s='grep -R'
+alias s='grep'
 alias t='tail'
 alias o='open'
 alias h='history | grep '
+alias pag='ag --pager=less'
 
-alias v='/Applications/MacVim.app/Contents/MacOS/Vim'
+alias v='/usr/local/bin/vim'
 
-alias sb='subl'
+alias r='osascript -e "tell application \"Google Chrome\" to tell the active tab of its first window" -e "reload" -e "end tell"'
+
+alias sshot='convert "$HOME/Desktop/$(ls -t ~/Desktop/ | head -1)" -resize 50% -unsharp 1.5x1.2+1.0+0.10 -strip ~/Desktop/screenshot.png'
 
 # Networking
 alias p='ping'
