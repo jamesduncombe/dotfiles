@@ -1,7 +1,19 @@
-alias dc="sudo docker"
+# Docker engine
+alias dc="docker"
 alias dr="dc run"
 alias ds="dc stop"
-alias di="dc images"
+alias dim="dc images"
 alias drmi="dc rmi"
 alias drm="dc rm"
+alias dcx="dc exec"
+alias dcp="dc ps"
+alias di="dc inspect"
+alias dcv="dc volume"
 alias dip="dc inspect -f '{{ .NetworkSettings.IPAddress }}'"
+
+# Docker Swarm
+alias dsd="docker stack deploy"
+
+# Docker machine
+alias dm="docker-machine"
+alias dml="dm ls"
